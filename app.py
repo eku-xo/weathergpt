@@ -160,9 +160,11 @@ if st.session_state.get("data_ready"):
 
             prompt = f"You are a helpful weather and climate assistant. Using this data:\n{context}\nAnswer this question: {user_question}"
 
-            gemini_response = client.models.generate_content(
-                model="gemini-3.6-flash",
-                contents=prompt
-            )
-
-            st.write(gemini_response.text)
+            try:
+                gemini_response = client.models.generate_content(
+                    model="gemini-3.6-flash",
+                    contents=prompt
+                )
+                st.write(gemini_response.text)
+            except Exception as e:
+                st.warning("WeatherGPT couldn't generate a response right now — please try asking again in a moment.")
